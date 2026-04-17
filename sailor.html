@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SailorPiece Wiki</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="stylesheet"
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: #7a5f2a;
+    --dark: #0a0a0f;
+    --dark-2: #0f0f1a;
+    --dark-3: #141420;
+    --dark-4: #1a1a2e;
+    --dark-5: #1e1e35;
+    --accent: #4a9eff;
+    --accent2: #ff6b35;
+    --text: #d4c5a9;
+    --text-dim: #7a7060;
+    --border: rgba(201,168,76,0.2);
+    --border-bright: rgba(201,168,76,0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .font-display { font-family: 'Cinzel Decorative', serif; }
+  .font-title { font-family: 'Cinzel', serif; }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(135deg, #c9a84c 0%, #e8c97a 50%, #c9a84c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark-2); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+  /* Header */
+  .header-bg {
+    background: linear-gradient(180deg, var(--dark) 0%, var(--dark-2) 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .header-bg::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Category cards */
+  .cat-card {
+    background: linear-gradient(135deg, var(--dark-3) 0%, var(--dark-4) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .cat-card:hover::before { opacity: 1; }
+
+  .cat-card:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(201,168,76,0.15);
+  }
+
+  .cat-card.active {
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    background: linear-gradient(135deg, var(--dark-4) 0%, var(--dark-5) 100%);
+  }
+
+  /* Item cards */
+  .item-card {
+    background: linear-gradient(135deg, var(--dark-3), var(--dark-4));
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .item-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .item-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  .item-card:hover::after { opacity: 1; }
+
+  /* Detail panel */
+  .detail-panel {
+    background: linear-gradient(135deg, var(--dark-3), var(--dark-4));
+    border: 1px solid var(--border-bright);
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .detail-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Rarity badges */
+  .rarity-common { background: rgba(150,150,150,0.2); color: #aaa; border: 1px solid rgba(150,150,150,0.3); }
+  .rarity-uncommon { background: rgba(30,200,80,0.15); color: #4cde82; border: 1px solid rgba(30,200,80,0.3); }
+  .rarity-rare { background: rgba(60,120,255,0.15); color: #6ca8ff; border: 1px solid rgba(60,120,255,0.3); }
+  .rarity-epic { background: rgba(160,60,255,0.15); color: #c07aff; border: 1px solid rgba(160,60,255,0.3); }
+  .rarity-legendary { background: rgba(255,170,0,0.15); color: #ffaa00; border: 1px solid rgba(255,170,0,0.3); }
+  .rarity-mythic { background: rgba(255,40,80,0.15); color: #ff5577; border: 1px solid rgba(255,40,80,0.3); }
+
+  /* Stat bars */
+  .stat-bar-bg { background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    transition: width 0.8s ease;
+  }
+
+  /* Search */
+  .search-input {
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { outline: none; border-color: var(--gold); }
+  .search-input::placeholder { color: var(--text-dim); }
+
+  /* Tag */
+  .tag {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .modal-box {
+    background: var(--dark-3);
+    border: 1px solid var(--border-bright);
+    border-radius: 16px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .modal-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Divider */
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    margin: 16px 0;
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* Glow icons */
+  .icon-glow { filter: drop-shadow(0 0 8px currentColor); }
+
+  /* Grid responsive */
+  .items-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  @media (max-width: 640px) { .items-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } }
+
+  .cats-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  @media (max-width: 640px) { .cats-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .anim-in { animation: fadeInUp 0.35s ease forwards; }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .shimmer { animation: shimmer 2s ease infinite; }
+
+  /* Nav mobile */
+  .sidebar {
+    background: linear-gradient(180deg, var(--dark-2), var(--dark));
+    border-right: 1px solid var(--border);
+  }
+
+  /* Table */
+  .wiki-table { width: 100%; border-collapse: collapse; }
+  .wiki-table th { background: rgba(201,168,76,0.08); color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .wiki-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; vertical-align: top; }
+  .wiki-table tr:last-child td { border-bottom: none; }
+  .wiki-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Star rating */
+  .stars { color: var(--gold); letter-spacing: 2px; }
+
+  /* Boss HP */
+  .boss-hp { background: rgba(255,50,50,0.15); border: 1px solid rgba(255,50,50,0.3); border-radius: 8px; }
+
+  /* NPC icon */
+  .npc-avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--border-bright);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    background: var(--dark-4);
+    flex-shrink: 0;
+  }
+
+  /* Floating tooltip */
+  .tooltip { position: relative; }
+  .tooltip .tip {
+    display: none;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-5);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .tooltip:hover .tip { display: block; }
+
+  /* Back button */
+  .back-btn {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+
+  /* Breadcrumb */
+  .breadcrumb { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.08em; }
+
+  .material-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(74,158,255,0.1); border: 1px solid rgba(74,158,255,0.25);
+    color: #7ec8ff; border-radius: 6px; padding: 3px 10px; font-size: 0.8rem;
+    margin: 2px;
+  }
+
+  .drop-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.25);
+    color: #ff9066; border-radius: 6px; padding: 3px 10px; font-size: 0.8rem;
+    margin: 2px;
+  }
+
+  .location-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(80,220,120,0.1); border: 1px solid rgba(80,220,120,0.25);
+    color: #70e8a0; border-radius: 6px; padding: 3px 10px; font-size: 0.8rem;
+    margin: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header-bg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="text-2xl shimmer">⚔️</div>
+      <div>
+        <h1 class="font-display text-sm sm:text-base gold-text leading-none">SAILOR PIECE WIKI</h1>
+        <p class="text-xs text-gray-500" style="font-family:'Cinzel',serif;letter-spacing:0.12em;">Everything is here</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 flex-1 max-w-xs">
+      <input id="globalSearch" type="text" placeholder="Cari item, npc, boss..." class="search-input w-full px-3 py-1.5 rounded-lg text-sm" oninput="handleGlobalSearch(this.value)">
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="max-w-7xl mx-auto px-4 py-6 relative z-10" id="mainContent">
+
+  <!-- HERO (visible when no category selected) -->
+  <div id="heroSection">
+    <div class="text-center py-8 mb-8">
+      <div class="text-5xl mb-4 shimmer">🌌</div>
+      <h2 class="font-display text-2xl sm:text-3xl gold-text mb-2">NEXUS CHRONICLES</h2>
+      <p class="text-gray-400 max-w-md mx-auto text-base">Database lengkap semua item, senjata, boss, NPC, dan lebih banyak lagi. Klik kategori untuk mulai.</p>
+    </div>
+
+    <!-- CATEGORY GRID -->
+    <div class="cats-grid mb-8">
+      <!-- Sword -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('sword')">
+        <div class="text-3xl mb-2">⚔️</div>
+        <div class="font-title text-xs gold-text mb-1">SWORD</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-sword">0 items</div>
+      </div>
+      <!-- Melee -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('melee')">
+        <div class="text-3xl mb-2">🪃</div>
+        <div class="font-title text-xs gold-text mb-1">MELEE</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-melee">0 items</div>
+      </div>
+      <!-- Devil Fruit -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('devil_fruit')">
+        <div class="text-3xl mb-2">🍈</div>
+        <div class="font-title text-xs gold-text mb-1">DEVIL FRUIT</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-devil_fruit">0 items</div>
+      </div>
+      <!-- Accessories -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('accessories')">
+        <div class="text-3xl mb-2">💍</div>
+        <div class="font-title text-xs gold-text mb-1">ACCESSORIES</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-accessories">0 items</div>
+      </div>
+      <!-- Race -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('race')">
+        <div class="text-3xl mb-2">🧬</div>
+        <div class="font-title text-xs gold-text mb-1">RACE</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-race">0 items</div>
+      </div>
+      <!-- Clan -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('clan')">
+        <div class="text-3xl mb-2">🏯</div>
+        <div class="font-title text-xs gold-text mb-1">CLAN</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-clan">0 items</div>
+      </div>
+      <!-- Rune -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('rune')">
+        <div class="text-3xl mb-2">🔮</div>
+        <div class="font-title text-xs gold-text mb-1">RUNE</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-rune">0 items</div>
+      </div>
+      <!-- NPC -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('npc')">
+        <div class="text-3xl mb-2">🧙</div>
+        <div class="font-title text-xs gold-text mb-1">NPC LOCATION</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-npc">0 items</div>
+      </div>
+      <!-- Items Drop -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('items_drop')">
+        <div class="text-3xl mb-2">📦</div>
+        <div class="font-title text-xs gold-text mb-1">ITEMS DROP</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-items_drop">0 items</div>
+      </div>
+      <!-- Boss -->
+      <div class="cat-card p-4 text-center" onclick="selectCategory('boss')">
+        <div class="text-3xl mb-2">👹</div>
+        <div class="font-title text-xs gold-text mb-1">BOSS</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-boss">0 items</div>
+      </div>
+            <div class="cat-card p-4 text-center" onclick="selectCategory('code_redeem')">
+        <div class="text-3xl mb-2">🎟️</div>
+        <div class="font-title text-xs gold-text mb-1">CODE REDEEM</div>
+        <div class="text-xs text-gray-500">Kode & Hadiah</div>
+        <div class="tag mt-2" id="count-code_redeem">0 items</div>
+      </div>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="p-4 rounded-xl text-center" style="background:var(--dark-3);border:1px solid var(--border)">
+        <div class="text-2xl font-title gold-text" id="statTotal">0</div>
+        <div class="text-xs text-gray-500 mt-1">Total Sword</div>
+      </div>
+      <div class="p-4 rounded-xl text-center" style="background:var(--dark-3);border:1px solid var(--border)">
+        <div class="text-2xl font-title" style="color:#ff5577" id="statBoss">0</div>
+        <div class="text-xs text-gray-500 mt-1">Total Melee</div>
+      </div>
+      <div class="p-4 rounded-xl text-center" style="background:var(--dark-3);border:1px solid var(--border)">
+        <div class="text-2xl font-title" style="color:#c07aff" id="statLegendary">0</div>
+        <div class="text-xs text-gray-500 mt-1">Redeem Code Active</div>
+      </div>
+      <div class="p-4 rounded-xl text-center" style="background:var(--dark-3);border:1px solid var(--border)">
+        <div class="text-2xl font-title" style="color:#70e8a0" id="statNPC">0</div>
+        <div class="text-xs text-gray-500 mt-1">Total Fruit</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY VIEW -->
+  <div id="categoryView" class="hidden anim-in">
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 mb-4">
+      <button class="back-btn px-3 py-1.5 text-xs flex items-center gap-1" onclick="backToHome()">
+        ← <span class="font-title">Home</span>
+      </button>
+      <span class="text-gray-600">/</span>
+      <span class="breadcrumb text-gray-400" id="breadcrumbCat"></span>
+    </div>
+
+    <!-- Category Header -->
+    <div class="detail-panel p-5 mb-5">
+      <div class="flex items-center gap-4">
+        <div class="text-4xl" id="catIcon"></div>
+        <div>
+          <h2 class="font-display text-lg sm:text-xl gold-text" id="catTitle"></h2>
+          <p class="text-gray-400 text-sm mt-0.5" id="catDesc"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search in category -->
+    <div class="mb-4">
+      <input id="catSearch" type="text" placeholder="Cari dalam kategori ini..." class="search-input w-full px-4 py-2 rounded-lg text-sm" oninput="filterItems(this.value)">
+    </div>
+
+    <!-- Items Grid -->
+    <div class="items-grid" id="itemsGrid"></div>
+
+    <!-- Empty state -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <div class="text-4xl mb-3 opacity-30">🗃️</div>
+      <p class="text-gray-500 font-title text-sm">Belum ada item di kategori ini</p>
+      <p class="text-gray-600 text-xs mt-1">Klik "+ Tambah Item" untuk menambahkan</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ITEM DETAIL MODAL -->
+<div id="itemModal" class="modal-overlay hidden" onclick="closeItemModal(event)">
+  <div class="modal-box p-6 anim-in" onclick="event.stopPropagation()">
+    <button onclick="closeItemModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-xl z-10">✕</button>
+    <div id="itemModalContent"></div>
+  </div>
+</div>
+
+<!-- ADD ITEM MODAL -->
+<div id="addItemModal" class="modal-overlay hidden" onclick="closeAddItemModal(event)">
+  <div class="modal-box p-6 anim-in" onclick="event.stopPropagation()" style="max-width:560px">
+    <button onclick="closeAddItemModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-xl">✕</button>
+    <h3 class="font-display text-base gold-text mb-4" id="addModalTitle">Tambah Item Baru</h3>
+    <div class="space-y-3" id="addFormFields"></div>
+    <div class="flex gap-2 mt-5">
+      <button onclick="saveItem()" class="flex-1 py-2 rounded-lg text-sm font-title" style="background:rgba(201,168,76,0.2);border:1px solid var(--gold);color:var(--gold);cursor:pointer">Simpan</button>
+      <button onclick="closeAddItemModal()" class="px-4 py-2 rounded-lg text-sm" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-dim);cursor:pointer">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL (Global) -->
+<div id="addGlobalModal" class="modal-overlay hidden" onclick="closeAddModal(event)">
+  <div class="modal-box p-6 anim-in" onclick="event.stopPropagation()" style="max-width:400px">
+    <button onclick="closeAddModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-xl">✕</button>
+    <h3 class="font-display text-base gold-text mb-4">Pilih Kategori</h3>
+    <div class="space-y-2" id="globalCatList"></div>
+  </div>
+</div>
+<div id="welcomeModal" class="modal-overlay hidden" onclick="closeWelcomeModal(event)">
+  <div class="modal-box p-6 anim-in text-center" onclick="event.stopPropagation()" style="max-width:420px">
+    <div class="text-4xl mb-3">🔔</div>
+    <h3 class="font-display text-xl gold-text mb-2">PENGUMUMAN</h3>
+    <div class="gold-divider"></div>
+    
+    <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+      Selamat datang di SailorPiece Wiki! Ini masih dalam tahap pengembangan, baru ada sword guide.
+    </p>
+    
+    <button onclick="closeWelcomeModal()" class="w-full py-2 rounded-lg text-sm font-title" style="background:rgba(201,168,76,0.2);border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='rgba(201,168,76,0.3)'" onmouseout="this.style.background='rgba(201,168,76,0.2)'">
+      Oke, Mengerti
+    </button>
+  </div>
+</div>
+<script src="sp.js"></script>
+</body>
+</html>
