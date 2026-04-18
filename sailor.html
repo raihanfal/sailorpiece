@@ -370,8 +370,8 @@
   <div id="heroSection">
     <div class="text-center py-8 mb-8">
       <div class="text-5xl mb-4 shimmer">🌌</div>
-      <h2 class="font-display text-2xl sm:text-3xl gold-text mb-2">NEXUS CHRONICLES</h2>
-      <p class="text-gray-400 max-w-md mx-auto text-base">Database lengkap semua item, senjata, boss, NPC, dan lebih banyak lagi. Klik kategori untuk mulai.</p>
+      <h2 class="font-display text-2xl sm:text-3xl gold-text mb-2">SAILOR PIECE WIKI</h2>
+      <p class="text-gray-400 max-w-md mx-auto text-base">Wiki lengkap semua item, senjata, boss, NPC, dan lebih banyak lagi. Klik kategori untuk mulai.</p>
     </div>
 
     <!-- CATEGORY GRID -->
@@ -469,7 +469,7 @@
         <div class="text-xs text-gray-500 mt-1">Redeem Code Active</div>
       </div>
       <div class="p-4 rounded-xl text-center" style="background:var(--dark-3);border:1px solid var(--border)">
-        <div class="text-2xl font-title" style="color:#70e8a0" id="statNPC">0</div>
+        <div class="text-2xl font-title" style="color:#70e8a0" id="statNPC">2</div>
         <div class="text-xs text-gray-500 mt-1">Total Fruit</div>
       </div>
     </div>
@@ -551,7 +551,7 @@
     <div class="gold-divider"></div>
     
     <p class="text-gray-300 text-sm mb-6 leading-relaxed">
-      Selamat datang di SailorPiece Wiki! Ini masih dalam tahap pengembangan, baru ada sword guide.
+      Selamat datang di SailorPiece Wiki! Ini masih dalam tahap pengembangan, baru ada sword, melee, accessories & Devil Fruit guide.
     </p>
     
     <button onclick="closeWelcomeModal()" class="w-full py-2 rounded-lg text-sm font-title" style="background:rgba(201,168,76,0.2);border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='rgba(201,168,76,0.3)'" onmouseout="this.style.background='rgba(201,168,76,0.2)'">
@@ -560,6 +560,7 @@
   </div>
 </div>
 <script>
+  
   // ============================================================
 // DATA STORE - Edit di sini untuk menambah/ubah data
 // ============================================================
@@ -570,7 +571,7 @@ const CATEGORIES = {
     fields: ['name','rarity','stats','description','how_to_get','materials','location','level_req','notes'],
   },
   melee: {
-    icon: '🪃', title: 'MELEE WEAPON', desc: 'Senjata melee selain pedang: palu, tombak, tongkat, dll',
+    icon: '🪃', title: 'MELEE WEAPON', desc: 'Click Pada Meleenya Untuk Melihat Info yang Lebih detail terkait Melee tersebut',
     fields: ['name','rarity','type','stats','description','how_to_get','materials','location','level_req','notes'],
   },
   devil_fruit: {
@@ -806,82 +807,598 @@ let DB = {
   ],
   melee: [
     {
-      id: 'm1', name: 'Thunder Warhammer', rarity: 'legendary',
-      type: 'Hammer',
-      stats: 'ATK: 1200 | Lightning DMG: +350 | Stun Chance: 40%',
-      description: 'Palu perang raksasa yang diimbue petir dari dewa petir Thorkan.',
-      how_to_get: 'Drop dari Raid Boss "Thorkan" dengan drop rate 2%.',
+      id: 'm1', name: 'Combat Basic', rarity: 'Common',
+      type: 'dps/burst',
+      stats: 'Skill Unlock X & Z',
+        description: 'Combat	Basic punches and kicks with low damage scaling.',
+      how_to_get: 'Default style (unlocked at start).',
       materials: '-',
-      location: 'Thunder Peak Raid',
-      level_req: '85',
-      notes: 'Stun hanya efektif terhadap musuh non-boss.'
+      location: 'Starter Island',
+      level_req: '-',
+      notes: 'Startee Melee.',
+      image: 'melee/combat.jpg'
     },
     {
-      id: 'm2', name: 'Serpent Spear', rarity: 'epic',
-      type: 'Spear',
-      stats: 'ATK: 580 | Poison DMG: +180 | Range: +1',
-      description: 'Tombak bermotif ular yang mengandung racun mematikan di ujungnya.',
-      how_to_get: 'Craft menggunakan material dari Snake Den dungeon.',
-      materials: 'Viper Fang x6, Poison Gland x4, Ancient Wood x3',
-      location: 'Craftsman Naga - Jungle Village',
-      level_req: '50',
-      notes: 'Poison tick 3 detik sekali selama 15 detik.'
+      id: 'm2', name: 'Cursed Vessel (Yuji)', rarity: 'legendary',
+      type: 'DPS',
+      stats: 'Unlock Skill X,Z & C',
+      description: 'Fast combo-based melee with quick cooldowns.',
+      how_to_get: 'Purchase from the Cursed Vessel (Yuji) Trainer NPC.',
+      materials: '7x Energy Core, 3x Flash Impact, 1x Divergent Pulse',
+      location: 'Shibuya Station',
+      level_req: '-',
+      notes: 'No komen.',
+      image: 'melee/cursed_vessel.jpg'
+    },
+    {
+      id: 'm3', name: 'Qin Shi', rarity: 'legendary',
+      type: 'DPS',
+      stats: 'Unlock Skill X,Z & C',
+      description: 'Balanced AoE style with steady damage output.',
+      how_to_get: 'Obtain from the Boss Exchange NPC for 250 Boss Tickets. Then purchase from the Qin Shi Trainer NPC.',
+      materials: '500.000 Money, 2.500 Gems, 7x Jade Tablet, 3x Imperial Seal.',
+      location: 'Boss Island',
+      level_req: '-',
+      notes: 'No komen.',
+      image: 'melee/qinshi.jpg'
+    },
+    {
+      id: 'm4', name: 'Limitless Sorcerer (Gojo)', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C & V',
+      description: 'Strong AoE damage with crowd control and burst potential.',
+      how_to_get: 'Purchase from the Limitless Sorcerer (Gojo) Trainer NPC.',
+      materials: '750.000 Money, 4.000 Gems, 6x Void Fragment, 3x Limitless Ring, 1x Infinity Core.',
+      location: 'Shibuya Station',
+      level_req: '-',
+      notes: 'quests: Kill 350 mobs, Use any melee ability 350 times, Kill Limitless Sorcerer Boss 15 times.',
+      image: 'melee/gojo1.jpg'
+    },
+{
+      id: 'm5', name: 'Cursed King (Sukuna)', rarity: 'mythic',
+      type: 'DPS',
+      stats: 'Unlock Skill X,Z,C & V',
+      description: 'High burst damage with strong PvP and aggressive skills.',
+      how_to_get: 'Purchase from the Cursed Vessel (Sukuna) Trainer NPC.',
+      materials: '1.250.000 Money, 5.000 Gems, 6x Cursed Finger, 3x Dismantle Fang, 1x Crimson Heart',
+      location: 'Shibuya Station',
+      level_req: '-',
+      notes: 'quests: Deal 35M damage, Kill 25 players, Kill Cursed Vessel Boss 15 times. .',
+      image: 'melee/cursed_king.jpg'
+    },
+    {
+      id: 'm6', name: 'Vampire King (Alucard)', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C & V',
+      description: 'Lifesteal-heavy style with strong sustain.',
+      how_to_get: 'Purchase from the Vampire King (Alucard) Trainer NPC.',
+      materials: '6.500.000 Money, 10.000 Gems, Vampire King (Title), 5x Soul Amulet, 1x Casull, 1x Blood Ring.',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'You Should Have Vampire Race to buy it.',
+      image: 'melee/vampire.jpg'
+    },
+    {
+      id: 'm7', name: 'Madoka', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C & V',
+      description: 'High burst with support-style abilities.',
+      how_to_get: 'Purchase from the Madoka Trainer NPC.',
+      materials: '20.000.000 Money, 15.000 Gems, 100x Heart, 8x Divine Fragment, 5x Sacred Bow, 3x Radiant Core, 1x Pink Gems, Star Maiden (Title)..',
+      location: 'Valentine Island',
+      level_req: '-',
+      notes: 'limited item from valentine event',
+      image: 'melee/madoka.jpg'
+    },
+        {
+      id: 'm8', name: 'King of Heroes (Gilgamesh)', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C & V',
+      description: 'Strong AoE damage with excellent farming efficiency.',
+      how_to_get: 'Purchase from the King of Heroes (Gilgamesh) Trainer NPC.',
+      materials: '25.000.000 Money, 22.500 Gems, 12x Throne Remnant, 6x Ancient Shard, 3x Golden Essence, 1x Phantasm Core, Golden King (Title).',
+      location: 'Boss Island',
+      level_req: '-',
+      notes: 'Melee top tier untuk afk, the best pokoknya.',
+      image: 'melee/gilgamesh.jpg'
+    },
+        {
+      id: 'm9', name: 'Strongest in History', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'Top-tier AoE damage and endgame scaling.',
+      how_to_get: 'Consume 20x Awakened Cursed Fingers and then purchase from the Strongest in History Trainer NPC.',
+      materials: '7x Vessel Ring, 3x Malevolent Soul, 1x Cursed Flesh, Disgraced One (Title)',
+      location: 'Shinjuku Island',
+      level_req: '-',
+      notes: 'Versi kedua dari curse king milik sukuna',
+      image: 'melee/sukuna2.jpg'
+    },
+        {
+      id: 'm10', name: 'Strongest of Today', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'High AoE damage with strong farming potential.',
+      how_to_get: 'Consume 6x Six Eyes and then purchase from the Strongest of Today Trainer NPC.',
+      materials: '9x Reversal Pulse, 3x Blue Singularity, 1x Infinity Essence, Strongest Sorcerer (Title)',
+      location: 'Shinjuku Island',
+      level_req: '-',
+      notes: 'Versi kedua dari limithless sorcerer milik gojo',
+      image: 'melee/gojo2.jpg'
+    },
+            {
+      id: 'm11', name: 'Demon King (Anos)', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'Extremely high damage with strong scaling abilities.',
+      how_to_get: 'Purchase from the Demon King (Anos) Trainer NPC.',
+      materials: '65x Calamity Seal, 12x Demonic Fragment, 6x Demonic Shard, 2x Destruction Eye, 1x Imperial Mark, Voldigoat (Clan), Demon King (Title).',
+      location: 'Academy Island',
+      level_req: '-',
+      notes: 'paling enak kalo didapetin karna langsung dapet skill f',
+      image: 'melee/demon_king.jpg'
+    },
+            {
+      id: 'm12', name: 'Blessed Maiden', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'Balanced AoE with strong late-game scaling.',
+      how_to_get: 'Purchase from the Blessed Maiden Trainer NPC.',
+      materials: '1x Celestial Mark, 3x Aero Core, 8x Gale Essence, 14x Tide Remnant, 25x Tempest Relic, 32,500 Gems, Astral Empress (Title)',
+      location: 'Boss Island',
+      level_req: '-',
+      notes: 'melee my bini gw',
+      image: 'melee/blessed_meiden.jpg'
+    },
+    {
+      id: 'm13', name: 'Corrupted Excalibur (Saber Alter)', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'High burst melee with corruption-based abilities.',
+      how_to_get: 'Purchase from the Corrupted Excalibur (Saber Alter) Trainer NPC.',
+      materials: '25x Dark Grail, 15x Morgan Remnant, 8x Alter Essence, 3x Corruption Core, 1x Corrupt Crown, Corrupt Tyrant (Title)',
+      location: 'Boss Island',
+      level_req: '-',
+      notes: 'Keren sih ini kece, wajib punya',
+      image: 'melee/corrupt_excalibur.jpg'
+    },
+    {
+      id: 'm14', name: 'Strongest Shinobi', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'High burst damage and special.',
+      how_to_get: 'Purchase from Strongest Shinobi Trainer NPC.',
+      materials: 'Battlefield Warlord (Title), 40K Gems, 1x Path Fragment, 3x Eternal Core, 8x Battle Sigil, and 15x Power Remnant',
+      location: 'Ninja Island',
+      level_req: '-',
+      notes: 'untuk buka skill f harus menyelesaikan misi terlebih dahulu',
+      image: 'melee/madara.jpg'
+    },
+    {
+      id: 'm12', name: 'Moon Slayer', rarity: 'mythic',
+      type: 'BURST',
+      stats: 'Unlock Skill X,Z,C,V & F',
+      description: 'Quick abilities with low cooldown and burst damage.',
+      how_to_get: 'Purchase from Moon Slayer boss.',
+      materials: '“Six Eyed Demon” Title, 37.5K Gems, 1x Moon Crest, 4x Crescent Shard, 9x Lunar Essence, 16x Demon Remnant, 25x Upper Seal ',
+      location: 'Boss Island',
+      level_req: '-',
+      notes: 'skill f harus menyelesaikan misi terlebih dahulu',
+      image: 'melee/moonslayer.jpg'
     },
   ],
   devil_fruit: [
     {
-      id: 'df1', name: 'Magu Magu no Mi', rarity: 'mythic',
-      fruit_type: 'Logia - Magma',
-      abilities: 'Kontrol magma, kebal api biasa, transformasi tubuh jadi magma',
-      description: 'Salah satu Devil Fruit terkuat bertipe Logia. User bisa menghasilkan, mengontrol, dan bertransformasi menjadi magma.',
-      how_to_get: 'Spawn random di dunia setiap 1 jam. Bisa juga drop dari World Boss "Volcano Titan" (0.5%).',
-      location: 'Anywhere (random spawn), Volcano Region (higher chance)',
-      level_req: '60',
-      notes: 'Logia immunity berlaku kecuali kena Haki atau senjata khusus.'
+      id: 'df1', name: 'Light', rarity: 'legendary',
+      fruit_type: 'DPS',
+      abilities: 'flight, aoe, burst.',
+      description: 'satu-satunya Devil Fruit yang bisa terbang.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island.',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'bagus untuk pergi pergi soalnya punya skill terbang.'
     },
     {
-      id: 'df2', name: 'Hito Hito no Mi, Model: Nika', rarity: 'mythic',
-      fruit_type: 'Mythical Zoan - Sun God',
-      abilities: 'Gear transformations, rubber body, environmental freedom, awakening aura',
-      description: 'Buah paling langka dan paling dicari. Memberi kebebasan mutlak kepada pemakainya.',
-      how_to_get: 'Hanya bisa di-spawn oleh Game Master saat event special. Sangat langka.',
-      location: 'GM Event Only',
-      level_req: '100',
-      notes: 'Tidak bisa dibeli atau di-trade. Satu-satunya cara lewat event.'
-    },
-    {
-      id: 'df3', name: 'Gura Gura no Mi', rarity: 'legendary',
-      fruit_type: 'Paramecia - Tremor',
-      abilities: 'Menciptakan gempa bumi dan gelombang kejut udara',
-      description: 'Fruit yang mampu menghancurkan dunia. Setiap pukulan membawa tremor dahsyat.',
-      how_to_get: 'Spawn random (rate lebih tinggi dari Mythic tier). Sekali per 2 jam.',
-      location: 'Random spawn di seluruh map',
-      level_req: '80',
+      id: 'df2', name: 'Quake', rarity: 'epic',
+      fruit_type: 'BURST',
+      abilities: 'huge aoe, burst',
+      description: 'buah dengan skill terbesar areanya, dan cocok untuk afk.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
       notes: 'AoE tremor bisa merusak terrain secara temporer.'
     },
+    {
+      id: 'df3', name: 'flame', rarity: 'legendary',
+      fruit_type: 'DPS',
+      abilities: 'DPS, BURST, AOE.',
+      description: 'Fruit yang aoenya bagus dan gampang didapatkan.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'optional aja kalo gadapet light/quake pake flame.'
+    },
+        {
+      id: 'df4', name: 'bomb', rarity: 'rare',
+      fruit_type: 'BURST',
+      abilities: 'BURST.',
+      description: 'Fruit jarang kepake.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'gakepake jangan dipake.'
+    },
+        {
+      id: 'df4', name: 'invisible', rarity: 'legendary',
+      fruit_type: 'NONE',
+      abilities: 'invisible.',
+      description: 'gaguna.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'gaguna sama sekali.'
+    }
   ],
   accessories: [
     {
-      id: 'a1', name: 'Ring of the Ancient King', rarity: 'legendary',
-      slot: 'Ring',
-      stats: 'HP: +2500 | All Res: +15% | Cooldown: -10%',
-      description: 'Cincin milik raja kuno yang berkuasa ribuan tahun. Memancarkan energi yang terasa di sekitarnya.',
-      how_to_get: 'Drop dari Dungeon "Tomb of the Ancient" chest terakhir.',
-      materials: '-',
-      location: 'Tomb of the Ancient - Boss Chest',
-      level_req: '70',
-      notes: 'Hanya 1 yang bisa diequip bersamaan dengan unique ring lain.'
+      id: 'a1', name: 'Gojo Blindfold', rarity: 'legendary',
+      slot: '5% Chance',
+      stats: '+40% DEF and +25% DMG',
+      description: 'Buffs at Enchant 10 (Max): +90% DEF and +65% DMG',
+      how_to_get: 'drop from the Gojo Boss',
+      materials: '',
+      location: 'Shibuya Station',
+      level_req: '4.200',
+      notes: 'equipment that strengthens you, the better the stronger..',
+      image: 'armor/gojo-blindfold.jpg'
     },
     {
-      id: 'a2', name: 'Necklace of Shadows', rarity: 'epic',
-      slot: 'Necklace',
-      stats: 'DEF: +400 | Shadow Dmg: +20% | Stealth CD: -30%',
-      description: 'Kalung dari batu shadow crystal yang memberimu bayangan pelindung.',
-      how_to_get: 'Craft di Shadow Forge atau beli dari NPC di Shadow Market.',
-      materials: 'Shadow Crystal x5, Void Thread x2',
-      location: 'Shadow Forge - Nyx City',
-      level_req: '45',
-      notes: 'Cocok untuk build Rogue/Assassin.'
+      id: 'a2', name: 'Saber Armor', rarity: 'legendary',
+      slot: '5% Chance',
+      stats: '+35% DEF, +20% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +85% DEF, +60% DMG, and 35% DMG Reduction.',
+      how_to_get: 'drop from the Saber Boss',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '4.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/saber-armour.jpg'
+    },
+    {
+      id: 'a3', name: 'Yuji Hair', rarity: 'legendary',
+      slot: '5% Chance',
+      stats: '+30% DEF, +22% DMG, and 12% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +80% DEF, +62% DMG, and 32% DMG Reduction',
+      how_to_get: 'drop from the Yuji Boss.',
+      materials: '',
+      location: 'Shibuya Station',
+      level_req: '4.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/yuji-hair.jpg'
+    },
+    {
+      id: 'a4', name: 'Sukuna Collar', rarity: 'mythic',
+      slot: '4% Chance',
+      stats: '+45% DEF and +30% DMG',
+      description: 'Buffs at Enchant 10 (Max): +95% DEF and +70% DMG',
+      how_to_get: 'drop from the Sukuna Boss.',
+      materials: '',
+      location: 'Shibuya Station',
+      level_req: '4.500',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/sukuna-collar.jpg'
+    },
+    {
+      id: 'a5', name: 'Jinwoo Cape', rarity: 'mythic',
+      slot: '3% Chance',
+      stats: '+40% DEF, +30% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +90% DEF, +70% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Jinwoo Boss',
+      materials: '',
+      location: 'Sailor Island',
+      level_req: '5.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/jinwoo-cape.jpg'
+    },
+    {
+      id: 'a6', name: 'Santa Hat', rarity: 'mythic',
+      slot: 'LIMITED',
+      stats: '+30% DEF, +20% DMG, and 5% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +80% DEF, +60% DMG, and 25% DMG Reduction',
+      how_to_get: 'Santa Quest NPC (Currently unobtainable)',
+      materials: '',
+      location: 'Christmas Island',
+      level_req: '0',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/santa-hat.jpg'
+    },
+    {
+      id: 'a7', name: 'Ragna Sigil', rarity: 'mythic',
+      slot: '2% Chance (Limited)',
+      stats: '+45% DEF, +40% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +95% DEF, +80% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Ragna Boss.',
+      materials: '',
+      location: 'limited',
+      level_req: '0',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/ragna-sigil.jpg'
+    },
+    {
+      id: 'a8', name: 'Qhin Shi Blindfold', rarity: 'mythic',
+      slot: '2.5% Chance',
+      stats: '+30% DEF, +35% DMG, and 17% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +80% DEF, +75% DMG, and 37% DMG Reduction',
+      how_to_get: 'drop chance from the Qin Shi Boss',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '7.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/qin-shi-blindfold.jpg'
+    },
+    {
+      id: 'a9', name: 'Aizen Haori', rarity: 'mythic',
+      slot: '4% Chance',
+      stats: '+50% DEF, +40% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +100% DEF, +80% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Aizen Boss.',
+      materials: '',
+      location: 'Hueco Moundo',
+      level_req: '7.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/aizen-haori.jpg'
+    },
+    {
+      id: 'a10', name: 'Shadow Cloak', rarity: 'mythic',
+      slot: '0.85%-2.5% Chance',
+      stats: '+60% DEF, +45% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +110% DEF, +85% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Shadow Boss.',
+      materials: '',
+      location: 'Shadow Dungeon',
+      level_req: '7.500',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/shadow-cloak.jpg'
+    },
+    {
+      id: 'a11', name: 'Alucard Coat', rarity: 'mythic',
+      slot: '3% Chance',
+      stats: '+40% DEF, +37% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +90% DEF, +77% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Alucard Boss.',
+      materials: '',
+      location: 'Sailor Island',
+      level_req: '9.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/alucard-coat.jpg'
+    },
+    {
+      id: 'a12', name: 'Devine Wheel', rarity: 'mythic',
+      slot: '1.25-2% Chance',
+      stats: '+70% DEF, +50% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +120% DEF, +90% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Strongest in History Boss',
+      materials: '',
+      location: 'Shinjuku Island',
+      level_req: '10.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/divine-wheel.jpg'
+    },
+    {
+      id: 'a13', name: 'Gojo Haori', rarity: 'mythic',
+      slot: '1.25-2% Chance',
+      stats: '+65% DEF, +47% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +115% DEF, +87% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Strongest of Today Boss',
+      materials: '',
+      location: 'Shinjuku Island',
+      level_req: '10.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/gojo-haori.jpg'
+    },
+    {
+      id: 'a14', name: 'Hollow Mask', rarity: 'mythic',
+      slot: '2% Chance',
+      stats: '+50% DEF, +40% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +100% DEF, +80% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Ichigo Boss.',
+      materials: '',
+      location: 'klkkk',
+      level_req: '10.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/hollow-mask.jpg'
+    },
+    {
+      id: 'a15', name: 'Slime Wings', rarity: 'mythic',
+      slot: '1.25-2% Chance',
+      stats: '+75% DEF, +55% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +125% DEF, +95% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Rimuru Boss',
+      materials: '',
+      location: 'Slime Island',
+      level_req: '0',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/slime-wings.jpg'
+    },
+    {
+      id: 'a16', name: 'Valentine Heart', rarity: 'mythic',
+      slot: 'LIMITED',
+      stats: '+35% DEF, +25% DMG, and 10% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +85% DEF, +65% DMG, and 30% DMG Reduction',
+      how_to_get: 'Cupid Trial Quest (Valentine Island)',
+      materials: '',
+      location: 'Valetine Island',
+      level_req: '0',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/valentine-heart.jpg'
+    },
+    {
+      id: 'a17', name: 'Heart Wings', rarity: 'mythic',
+      slot: 'LIMITED',
+      stats: '+55% DEF, +42% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +105% DEF, +82% DMG, and 35% DMG Reduction',
+      how_to_get: 'Via Valentine Merchant for 75 Hearts',
+      materials: '',
+      location: 'Velentine Island',
+      level_req: '0',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/heart-wings.jpg'
+    },
+    {
+      id: 'a30', name: 'Ultimate Wings', rarity: 'mythic',
+      slot: '1.5% Chance (Limited)',
+      stats: '+65% DEF, +50% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +115% DEF, +90% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from Madoka Boss',
+      materials: '',
+      location: 'Valentine Island',
+      level_req: '0',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/ultimate-wings.jpg'
+    },
+    {
+      id: 'a18', name: 'Gilgamesh Armor', rarity: 'mythic',
+      slot: '1.15-1.8% Chance',
+      stats: '+80% DEF, +60% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +130% DEF, +100% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Gilgamesh Boss',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/gilgamesh-armour.jpg'
+    },
+    {
+      id: 'a19', name: 'Anos Outfit', rarity: 'mythic',
+      slot: '0.75-1.20% Chance',
+      stats: '+85% DEF, +62% DMG, and 10% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +135% DEF, +102% DMG, and 30% DMG Reduction',
+      how_to_get: 'drop from the Anos Boss',
+      materials: '',
+      location: 'Academy Island',
+      level_req: '12.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/anos-outfit.jpg'
+    },
+    {
+      id: 'a20', name: 'Monarch Armour', rarity: 'mythic',
+      slot: '0.75-1.5% Chance',
+      stats: '+90% DEF, +65% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +140% DEF, +105% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Shadow Monarch Boss',
+      materials: '',
+      location: 'Lawless Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/monarch-armour.jpg'
+    },
+    {
+      id: 'a21', name: 'Sun Armor', rarity: 'mythic',
+      slot: '0.5-1.5% Chance',
+      stats: '+75% DEF, +55% DMG, and 20% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +125% DEF, +95% DMG, and 30% DMG Reduction',
+      how_to_get: 'drop from the Escanor Boss',
+      materials: '',
+      location: 'Boss Rush',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/sun-armour.jpg'
+    },
+    {
+      id: 'a22', name: 'Imperial Outfit', rarity: 'mythic',
+      slot: '0.9% Chance',
+      stats: '+90% DEF, +65% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +140% DEF, +105% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Virgil Boss',
+      materials: '',
+      location: 'Judgement Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/imperial-outfit.jpg'
+    },
+    {
+      id: 'a23', name: 'Meiden Outfit', rarity: 'mythic',
+      slot: '0.95-1.5% Chance',
+      stats: '+95% DEF, +70% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +145% DEF, +110% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Blessed Maiden Boss',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/maiden-outfit.jpg'
+    },
+    {
+      id: 'a24', name: 'Manipulator Outfit', rarity: 'mythic',
+      slot: '0.8-1.4% Chance',
+      stats: '+100% DEF, +72% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +150% DEF, +112% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the True Aizen Boss',
+      materials: '',
+      location: 'Soul Domination',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/manipulator-outfit.jpg'
+    },
+    {
+      id: 'a25', name: 'Alter Armour', rarity: 'mythic',
+      slot: '0.85-1.4% Chance',
+      stats: '+100% DEF, +75% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +150% DEF, +115% DMG, and 35% DMG Reduction',
+      how_to_get: 'drop from the Saber Alter Boss',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/alter-armour.jpg'
+    },
+    {
+      id: 'a26', name: 'Abyssal Outfit', rarity: 'mythic',
+      slot: '0.5%-1.5% Chance',
+      stats: '105% DEF, +80% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): 155% DEF, +120% DMG, and 35% DMG Reduction',
+      how_to_get: 'Dropped from Bosses in Tower Mode Or Buy At tower token shop',
+      materials: '',
+      location: 'Infinity Tower/Tower Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/abyssal-outfit.jpg'
+    },
+    {
+      id: 'a27', name: 'Atomic Outfit', rarity: 'mythic',
+      slot: '0.75-1.30% chance',
+      stats: '105% DEF, +82% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): 155% DEF, +122% DMG, and 35% DMG Reduction',
+      how_to_get: 'Dropped from the Atomic Boss',
+      materials: '',
+      location: 'Lawless Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/atomic-outfit.jpg'
+    },
+    {
+      id: 'a28', name: 'Moon Outfit', rarity: 'mythic',
+      slot:  '0.75-1.25% chance',
+      stats: '+107% DEF, +85% DMG, and 15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +157% DEF, +125% DMG, and 35% DMG Reduction',
+      how_to_get: 'Dropped from the Kokushibo (Moon Slayer) boss at Boss Island',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/moon-outfit.jpg'
+    },
+    {
+      id: 'a29', name: 'Ice Queen Outfit', rarity: 'mythic',
+      slot: '1.42%–4.72% Chance',
+      stats: '+110% DEF, +87% DMG, and +15% DMG Reduction',
+      description: 'Buffs at Enchant 10 (Max): +160% DEF, +127% DMG, and 35% DMG Reduction',
+      how_to_get: 'Dropped by the Ice Queen Boss',
+      materials: '',
+      location: 'Boss Island',
+      level_req: '13.000',
+      notes: 'equipment that strengthens you, the better the stronger.',
+      image: 'armor/ice-queen-outfit.jpg'
     },
   ],
   race: [
@@ -1285,6 +1802,7 @@ function closeWelcomeModal(e) {
     document.getElementById('welcomeModal').classList.add('hidden');
   }
 }
+  
 </script>
 </body>
 </html>
