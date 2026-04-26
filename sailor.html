@@ -399,7 +399,7 @@
       </div>
       <!-- Accessories -->
       <div class="cat-card p-4 text-center" onclick="selectCategory('accessories')">
-        <div class="text-3xl mb-2">💍</div>
+        <div class="text-3xl mb-2">🥼</div>
         <div class="font-title text-xs gold-text mb-1">ACCESSORIES</div>
         <div class="text-xs text-gray-500">View More...</div>
         <div class="tag mt-2" id="count-accessories">0 items</div>
@@ -444,6 +444,18 @@
         <div class="font-title text-xs gold-text mb-1">CODE REDEEM</div>
         <div class="text-xs text-gray-500">Kode & Hadiah</div>
         <div class="tag mt-2" id="count-code_redeem">0 items</div>
+      </div>
+      <div class="cat-card p-4 text-center" onclick="selectCategory('bloodline')">
+        <div class="text-3xl mb-2">🩸</div>
+        <div class="font-title text-xs gold-text mb-1">BLOODLINE</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-bloodline">0 items</div>
+      </div>
+      <div class="cat-card p-4 text-center" onclick="selectCategory('relic')">
+        <div class="text-3xl mb-2">💍</div>
+        <div class="font-title text-xs gold-text mb-1">Relic</div>
+        <div class="text-xs text-gray-500">View More...</div>
+        <div class="tag mt-2" id="count-accessories">4 items</div>
       </div>
     </div>
 
@@ -575,7 +587,7 @@
     <div class="gold-divider"></div>
     
     <p class="text-gray-300 text-sm mb-6 leading-relaxed">
-      Selamat datang di SailorPiece Wiki! Ini masih dalam tahap pengembangan, Jika Ada kesalahan dalam suatu item, ataupun Miss information DM gw di discord.
+      Selamat datang di SailorPiece Wiki! Ini masih dalam tahap pengembangan, Jika Ada kesalahan dalam suatu item, ataupun Miss information Silakan kasih masukan di ulasan paling bawah.
     </p>
     
     <button onclick="closeWelcomeModal()" class="w-full py-2 rounded-lg text-sm font-title" style="background:rgba(201,168,76,0.2);border:1px solid var(--gold);color:var(--gold);cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='rgba(201,168,76,0.3)'" onmouseout="this.style.background='rgba(201,168,76,0.2)'">
@@ -611,12 +623,8 @@ const CATEGORIES = {
     icon: '🪃', title: 'MELEE WEAPON', desc: 'Click Pada Meleenya Untuk Melihat Info yang Lebih detail terkait Melee tersebut',
     fields: ['name','rarity','type','stats','description','how_to_get','materials','location','level_req','notes'],
   },
-  devil_fruit: {
-    icon: '🍈', title: 'DEVIL FRUIT', desc: 'Buah iblis dengan kekuatan misterius. Sekali makan, kamu tidak bisa berenang',
-    fields: ['name','rarity','fruit_type','abilities','description','how_to_get','location','level_req','notes'],
-  },
   accessories: {
-    icon: '💍', title: 'ACCESSORIES', desc: 'Ring, kalung, gelang, dan aksesoris yang memberikan stat bonus',
+    icon: '🥼', title: 'ACCESSORIES', desc: 'Ring, kalung, gelang, dan aksesoris yang memberikan stat bonus',
     fields: ['name','rarity','slot','stats','description','how_to_get','materials','location','level_req','notes'],
   },
   race: {
@@ -626,6 +634,10 @@ const CATEGORIES = {
   clan: {
     icon: '🏯', title: 'CLAN', desc: 'Klan dengan bonus keturunan dan skill eksklusif',
     fields: ['name','rarity','bonus','abilities','description','how_to_get','notes'],
+  },
+  devil_fruit: {
+    icon: '🍈', title: 'DEVIL FRUIT', desc: 'Buah iblis dengan kekuatan misterius. Sekali makan, kamu tidak bisa berenang',
+    fields: ['name','rarity','fruit_type','abilities','description','how_to_get','location','level_req','notes'],
   },
   rune: {
     icon: '🔮', title: 'RUNE', desc: 'Rune untuk enchant senjata dan armor dengan efek elemental',
@@ -646,6 +658,18 @@ const CATEGORIES = {
   code_redeem: {
     icon: '🎟️', title: 'CODE REDEEM', desc: 'Daftar kode redeem yang bisa diklaim di dalam game'
   },
+  bloodline: {
+    icon: '🩸', 
+    title: 'BLOODLINE', 
+    desc: 'Garis keturunan atau famili dengan buff dan skill eksklusif',
+    fields: ['name','rarity','passives','abilities','description','how_to_get','notes']
+  },
+  relic: {
+    icon: '💍', 
+    title: 'RELIC', 
+    desc: 'Equiment Yang penting Untuk Di Sea 2',
+    fields: ['name','rarity','slot','stats','description','how_to_get','materials','location','level_req','notes']
+  }
 };
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwARWHmIpMM5aajj-emKzO_h43moQS1EgECEHI8f7_aCa7Eqe4cV0i3mvzv9h5hmOip/exec';
 const RARITY_ORDER = ['common','uncommon','rare','epic','legendary','mythic'];
@@ -863,6 +887,17 @@ let DB = {
       notes: 'Sword Limited jadi ayo pastikan kalian mempunyai pedang ini.',
       image: 'sword/Great-Mage.jpg'
     },
+    {
+      id: 's21', name: 'Anti Mage (Asta)', rarity: 'mythic',
+      stats: 'Skill Unlock X,Z,C,V & F',
+      description: 'Senjata yang diambil dari anime black clover.',
+      how_to_get: 'Comingsoon.',
+      materials: 'Comingsoon',
+      location: 'Comingsoon',
+      level_req: '-',
+      notes: 'Comingsoon.',
+      image: 'sword/antimage.jpg'
+    }
   ],
   
   
@@ -1071,58 +1106,6 @@ let DB = {
       notes: 'skill f harus menyelesaikan misi terlebih dahulu',
       image: 'melee/The-World.jpg'
     },
-  ],
-  devil_fruit: [
-    {
-      id: 'df1', name: 'Light', rarity: 'legendary',
-      fruit_type: 'DPS',
-      abilities: 'flight, aoe, burst.',
-      description: 'satu-satunya Devil Fruit yang bisa terbang.',
-      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island.',
-      location: 'Sailor Island',
-      level_req: '-',
-      notes: 'bagus untuk pergi pergi soalnya punya skill terbang.'
-    },
-    {
-      id: 'df2', name: 'Quake', rarity: 'epic',
-      fruit_type: 'BURST',
-      abilities: 'huge aoe, burst',
-      description: 'buah dengan skill terbesar areanya, dan cocok untuk afk.',
-      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
-      location: 'Sailor Island',
-      level_req: '-',
-      notes: 'AoE tremor bisa merusak terrain secara temporer.'
-    },
-    {
-      id: 'df3', name: 'flame', rarity: 'legendary',
-      fruit_type: 'DPS',
-      abilities: 'DPS, BURST, AOE.',
-      description: 'Fruit yang aoenya bagus dan gampang didapatkan.',
-      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
-      location: 'Sailor Island',
-      level_req: '-',
-      notes: 'optional aja kalo gadapet light/quake pake flame.'
-    },
-        {
-      id: 'df4', name: 'bomb', rarity: 'rare',
-      fruit_type: 'BURST',
-      abilities: 'BURST.',
-      description: 'Fruit jarang kepake.',
-      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
-      location: 'Sailor Island',
-      level_req: '-',
-      notes: 'gakepake jangan dipake.'
-    },
-        {
-      id: 'df4', name: 'invisible', rarity: 'legendary',
-      fruit_type: 'NONE',
-      abilities: 'invisible.',
-      description: 'gaguna.',
-      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
-      location: 'Sailor Island',
-      level_req: '-',
-      notes: 'gaguna sama sekali.'
-    }
   ],
   accessories: [
     {
@@ -2422,7 +2405,59 @@ let DB = {
   { id: 'id112', name: 'Aura Crate', rarity: 'mythic', image: 'item/aura-crate-item-sailor-piece.jpg', drop_from: 'Any enemy or Boss', drop_rate: '-', location: '-', use: 'Contains Auras (DMG boost, visual effects)' },
   { id: 'id113', name: 'Cosmetic Crate', rarity: 'mythic', image: 'item/cosmetic-crate.jpg', drop_from: 'Any Boss or Mob', drop_rate: '0.0028%', location: '-', use: '-' },
 ],
-
+devil_fruit: [
+    {
+      id: 'df1', name: 'Light', rarity: 'legendary',
+      fruit_type: 'DPS',
+      abilities: 'flight, aoe, burst.',
+      description: 'satu-satunya Devil Fruit yang bisa terbang.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island.',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'bagus untuk pergi pergi soalnya punya skill terbang.'
+    },
+    {
+      id: 'df2', name: 'Quake', rarity: 'epic',
+      fruit_type: 'BURST',
+      abilities: 'huge aoe, burst',
+      description: 'buah dengan skill terbesar areanya, dan cocok untuk afk.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'AoE tremor bisa merusak terrain secara temporer.'
+    },
+    {
+      id: 'df3', name: 'flame', rarity: 'legendary',
+      fruit_type: 'DPS',
+      abilities: 'DPS, BURST, AOE.',
+      description: 'Fruit yang aoenya bagus dan gampang didapatkan.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'optional aja kalo gadapet light/quake pake flame.'
+    },
+        {
+      id: 'df4', name: 'bomb', rarity: 'rare',
+      fruit_type: 'BURST',
+      abilities: 'BURST.',
+      description: 'Fruit jarang kepake.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'gakepake jangan dipake.'
+    },
+        {
+      id: 'df4', name: 'invisible', rarity: 'legendary',
+      fruit_type: 'NONE',
+      abilities: 'invisible.',
+      description: 'gaguna.',
+      how_to_get: 'Reroll in coin fruit reroll or gems fruit reroll in sailor island..',
+      location: 'Sailor Island',
+      level_req: '-',
+      notes: 'gaguna sama sekali.'
+    }
+  ],
+  
   code_redeem: [
     {
       id: 'cr1', name: 'BIGGESTUPDATEYET', rarity: 'Redeem Now',
@@ -2501,7 +2536,119 @@ let DB = {
       notes: 'Hanya bisa diklaim 1x per akun. Kedaluwarsa: Next Update'
     }
   ],
+  bloodline: [
+    {
+      id: 'bld1', name: 'Commoner', rarity: 'Common',
+      passives: '+7% Damage, +10% Max HP, +10% Experience (XP) Gain',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld2', name: 'Hunter', rarity: 'Uncommon',
+      passives: '+10% Damage, +15% Max HP, +10% Money Gain, +10% Gems Gain',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld3', name: 'Stormborn', rarity: 'Uncommon',
+      passives: '+12% Damage, +12% Max HP, +10% Experience (XP) Gain',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld4', name: 'Nightfall', rarity: 'rare',
+      passives: '+17% Damage, +17% Max HP, +1% Lifesteal',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld5', name: 'Vizard', rarity: 'rare',
+      passives: '+15% Damage, +20% Max HP, +15% Gems Gain',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld6', name: 'Demonblood', rarity: 'epic',
+      passives: '+22% Damage, +7% Melee Damage Multiplier, +1% Lifesteal',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld7', name: 'Dawnbringer', rarity: 'epic',
+      passives: '+20% Damage, +7% Sword Damage Multiplier, +7% Luck Multiplier, +2% Damage Reduction',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld8', name: 'Primordial', rarity: 'legendary',
+      passives: '+27% Damage, +40% Max HP, +10% Melee Damage Multiplier, +15% Luck Multiplier, +5% Damage Reduction',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    },
+    {
+      id: 'bld9', name: 'Astral', rarity: 'legendary',
+      passives: '+30% Damage, +35% Max HP, +10% Sword Damage Multiplier, +10% Luck Multiplier, +2% Lifesteal',
+      description: 'nothing.',
+      how_to_get: 'Buka di Bloodline Reroll.',
+      notes: 'Semakin Bagus Tingkat Rarity maka semakin bagus efeknya.'
+    }
+  ],
+  relic: [
+   {
+      id: 'r1', name: 'Luck Relic', rarity: 'Luck',
+      slot: 'Relic',
+      stats: '+20% Luck ',
+      description: 'No komen',
+      how_to_get: 'Craft From Relic Crafter at bizzare island',
+      materials: 'Relic Part #5 x30, Relic Part #6 x25',
+      location: 'Bizzare Island',
+      level_req: '13.000',
+      notes: 'Relic Bagus Untuk boost, karna effectnya cukup besar.',
+    },
+    {
+      id: 'r2', name: 'Damage Relic', rarity: 'Damage',
+      slot: 'Relic',
+      stats: '+30% Damage ',
+      description: 'No komen',
+      how_to_get: 'Craft From Relic Crafter at bizzare island',
+      materials: 'x40 Relic Part #7, x30 Relic Part #8, x50 Relic Part #1, x50 Relic Part #3  ',
+      location: 'Bizzare Island',
+      level_req: '13.000',
+      notes: 'Relic Bagus Untuk boost, karna effectnya cukup besar.',
+    },
+    {
+      id: 'r3', name: 'Crit Chance Relic', rarity: 'C. Chance',
+      slot: 'Relic',
+      stats: '+5% Critical Chance ',
+      description: 'No komen',
+      how_to_get: 'Craft From Relic Crafter at bizzare island',
+      materials: 'x20 Relic Part #1, x15 Relic Part #2',
+      location: 'Bizzare Island',
+      level_req: '13.000',
+      notes: 'Relic Bagus Untuk boost, karna effectnya cukup besar.',
+    },
+    {
+      id: 'r1', name: 'Crit Damage Relic', rarity: 'C. Damage',
+      slot: 'Relic',
+      stats: '+20% Critical Damage ',
+      description: 'No komen',
+      how_to_get: 'Craft From Relic Crafter at bizzare island',
+      materials: 'x25 Relic Part #3, x20 Relic Part #4',
+      location: 'Bizzare Island',
+      level_req: '13.000',
+      notes: 'Relic Bagus Untuk boost, karna effectnya cukup besar.',
+    },
+  ]
 };
+
 
 // ============================================================
 // STATE
