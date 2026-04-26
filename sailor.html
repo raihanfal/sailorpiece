@@ -465,6 +465,44 @@
         <div class="text-xs text-gray-500 mt-1">Total Active Code</div>
       </div>
     </div>
+            <div class="mt-16 mb-4 text-left">
+      <div class="flex items-center gap-2 mb-6">
+        <div class="h-px bg-gradient-to-r from-transparent via-[var(--gold-dim)] to-transparent flex-1"></div>
+        <h3 class="font-display text-xl gold-text px-4">Komentar & Ulasan</h3>
+        <div class="h-px bg-gradient-to-r from-transparent via-[var(--gold-dim)] to-transparent flex-1"></div>
+      </div>
+      
+      <div class="flex flex-col gap-6">
+        <div class="p-5 rounded-xl" style="background:var(--dark-3);border:1px solid var(--border)">
+          <h4 class="font-title text-sm text-gray-300 mb-4">Tinggalkan Jejak lu di Wiki ini</h4>
+          <form onsubmit="submitReview(event, 'home')" class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input type="text" id="revName" placeholder="Nama / Nickname" required class="search-input w-full px-3 py-2 rounded-lg text-sm">
+              <select id="revRating" required class="search-input w-full px-3 py-2 rounded-lg text-sm" style="color:var(--gold)">
+                <option value="5">⭐⭐⭐⭐⭐ (Sangat Membantu)</option>
+                <option value="4">⭐⭐⭐⭐ (Bagus)</option>
+                <option value="3">⭐⭐⭐ (Lumayan)</option>
+                <option value="2">⭐⭐ (Kurang)</option>
+                <option value="1">⭐ (Buruk)</option>
+              </select>
+            </div>
+            <textarea id="revText" placeholder="Tulis komentar lu di sini..." required rows="3" class="search-input w-full px-3 py-2 rounded-lg text-sm"></textarea>
+            <div class="flex justify-end">
+              <button type="submit" id="btnSubmitRev" class="px-6 py-2.5 rounded-lg text-sm font-title transition-all hover:bg-[var(--gold)] hover:text-[var(--dark)]" style="background:rgba(201,168,76,0.15);border:1px solid var(--gold);color:var(--gold);cursor:pointer;">
+                Kirim Komentar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="p-5 rounded-xl flex flex-col" style="background:var(--dark-4);border:1px solid var(--border)">
+          <h4 class="font-title text-sm text-gray-300 mb-4">Komentar Terbaru</h4>
+          <div id="reviewList_home" class="space-y-4 overflow-y-auto pr-2" style="max-height: 500px;">
+            <p class="text-gray-500 italic text-sm">Loading komentar...</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div> <div id="categoryView" class="hidden anim-in">
     <div class="flex items-center gap-2 mb-4">
       <button class="back-btn px-3 py-1.5 text-xs flex items-center gap-1" onclick="backToHome()">
@@ -545,6 +583,20 @@
     </button>
   </div>
 </div>
+<div id="thankYouModal" class="modal-overlay hidden" onclick="closeThankYouModal(event)">
+  <div class="modal-box p-6 anim-in text-center" onclick="event.stopPropagation()" style="max-width:400px; border-color: var(--gold)">
+    <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4" style="background:rgba(201,168,76,0.1); border:1px solid var(--gold)">
+      <svg class="w-8 h-8" style="color:var(--gold)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    </div>
+    <h3 class="font-display text-xl gold-text mb-2">Terima Kasih!</h3>
+    <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+      Komentar lu berhasil dikirim dan ditambahkan ke beranda. Makasih udah bantu meramaikan SailorPiece Wiki!
+    </p>
+    <button onclick="closeThankYouModal()" class="w-full py-2 rounded-lg text-sm font-title" style="background:var(--dark-3);border:1px solid var(--border);color:var(--text);cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='var(--dark-3)'">
+      Tutup
+    </button>
+  </div>
+</div>
 <script>
   // ============================================================
 // DATA STORE - Edit di sini untuk menambah/ubah data
@@ -595,7 +647,7 @@ const CATEGORIES = {
     icon: '🎟️', title: 'CODE REDEEM', desc: 'Daftar kode redeem yang bisa diklaim di dalam game'
   },
 };
-
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwARWHmIpMM5aajj-emKzO_h43moQS1EgECEHI8f7_aCa7Eqe4cV0i3mvzv9h5hmOip/exec';
 const RARITY_ORDER = ['common','uncommon','rare','epic','legendary','mythic'];
 
 // Main data object - isi di sini atau lewat form tambah
@@ -2437,6 +2489,16 @@ let DB = {
       id: 'cr13', name: 'SORRYFORBADSEA2QUEST', rarity: 'Redeem Now',
       description: 'Hadiah: Secret Chest 4x Cosmetic Crate 4x, Aura Crate 3x, 250 Clan Reroll 50.000 Gold, 3.000 gems',
       notes: 'Hanya bisa diklaim 1x per akun. Kedaluwarsa: Next Update'
+    },
+        {
+      id: 'cr14', name: 'RESTARTSORRYYYYYY', rarity: 'Redeem Now',
+      description: 'Hadiah: Secret Chest 4x Cosmetic Crate 4x, Aura Crate 3x, 250 Clan Reroll 50.000 Gold, 3.000 gems',
+      notes: 'Hanya bisa diklaim 1x per akun. Kedaluwarsa: Next Update'
+    },
+        {
+      id: 'cr15', name: 'FIXINGTRADINGISSUESSOON', rarity: 'Redeem Now',
+      description: 'Hadiah: Secret Chest 4x Cosmetic Crate 4x, Aura Crate 3x, 250 Clan Reroll 50.000 Gold, 3.000 gems',
+      notes: 'Hanya bisa diklaim 1x per akun. Kedaluwarsa: Next Update'
     }
   ],
 };
@@ -2455,6 +2517,9 @@ window.onload = function() {
   updateStats();
   updateCounts();
   document.getElementById('welcomeModal').classList.remove('hidden');
+  
+  // Load komentar di home
+  loadReviews('home'); 
 };
 
 function updateStats() {
@@ -2631,10 +2696,89 @@ function renderItemDetail(item) {
   if (item.effect) html += `<div class="mb-4"><div class="section-label mb-2">🔮 Effect</div><div class="p-3 rounded-lg text-sm text-gray-300" style="background:rgba(160,60,255,0.05);border:1px solid rgba(160,60,255,0.2)">${item.effect}</div></div>`;
   if (item.strategy) html += `<div class="mb-4"><div class="section-label mb-2">🗺️ Strategi</div><div class="p-3 rounded-lg text-sm text-gray-300 leading-relaxed" style="background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.2)">${item.strategy}</div></div>`;
   if (item.notes) html += `<div class="mb-2"><div class="section-label mb-2">📝 Notes</div><div class="p-3 rounded-lg text-sm text-gray-400 italic" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">${item.notes}</div></div>`;
-  
-  return html;
+
+  return html; 
 }
 
+// ============================================================
+// LOGIC ULASAN (GOOGLE SHEETS)
+// ============================================================
+
+// Fungsi Ambil Ulasan
+async function loadReviews(itemId) {
+  const container = document.getElementById(`reviewList_${itemId}`);
+  try {
+    const response = await fetch(`${SCRIPT_URL}?itemId=${itemId}`);
+    const reviews = await response.json();
+    
+    if (reviews.length === 0) {
+      container.innerHTML = '<p class="text-gray-500 italic text-sm">Belum ada ulasan. Jadilah yang pertama!</p>';
+      return;
+    }
+
+    container.innerHTML = reviews.map(r => `
+      <div class="p-3 rounded-lg" style="background:rgba(255,255,255,0.03); border:1px solid var(--border)">
+        <div class="flex justify-between items-start mb-1">
+          <span class="font-title text-sm gold-text">${r.nama}</span>
+          <span class="text-xs tracking-widest">${'⭐'.repeat(r.rating)}</span>
+        </div>
+        <p class="text-gray-300 text-xs">${r.ulasan}</p>
+      </div>
+    `).join('');
+    
+  } catch (error) {
+    container.innerHTML = '<p class="text-red-400 italic text-sm">Gagal memuat ulasan.</p>';
+  }
+}
+
+// Fungsi Kirim Ulasan
+async function submitReview(event, itemId) {
+  event.preventDefault(); 
+  
+  const btn = document.getElementById('btnSubmitRev');
+  const originalText = btn.innerHTML;
+  btn.textContent = 'Mengirim...';
+  btn.disabled = true;
+
+  const data = {
+    itemId: itemId, // Ini akan mengirim nilai 'home' ke database lu
+    nama: document.getElementById('revName').value,
+    rating: document.getElementById('revRating').value,
+    ulasan: document.getElementById('revText').value
+  };
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    
+    // Reset isi ketikan form
+    event.target.reset();
+    
+    // Langsung muat ulang daftar komentar di bawahnya biar langsung muncul
+    await loadReviews(itemId);
+    
+    // Kembalikan tulisan tombol
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+
+    // Munculin Pop-Up Terima Kasih
+    document.getElementById('thankYouModal').classList.remove('hidden');
+
+  } catch (error) {
+    alert('Gagal mengirim ulasan, coba lagi nanti.');
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
+}
+
+// Fungsi Tutup Modal Terima Kasih
+function closeThankYouModal(e) {
+  if (!e || e.target === document.getElementById('thankYouModal') || !e.target) {
+    document.getElementById('thankYouModal').classList.add('hidden');
+  }
+}
 // ============================================================
 // SEARCH
 // ============================================================
